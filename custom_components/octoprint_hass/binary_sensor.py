@@ -1,4 +1,4 @@
-"""Binary sensor platform for blueprint."""
+"""Binary sensor platform for octoprint_hass."""
 from homeassistant.components.binary_sensor import BinarySensorDevice
 from .const import (
     ATTRIBUTION,
@@ -13,16 +13,16 @@ async def async_setup_platform(
     hass, config, async_add_entities, discovery_info=None
 ):  # pylint: disable=unused-argument
     """Setup binary_sensor platform."""
-    async_add_entities([BlueprintBinarySensor(hass, discovery_info)], True)
+    async_add_entities([OctoprintBinarySensor(hass, discovery_info)], True)
 
 
 async def async_setup_entry(hass, config_entry, async_add_devices):
     """Setup sensor platform."""
-    async_add_devices([BlueprintBinarySensor(hass, {})], True)
+    async_add_devices([OctoprintBinarySensor(hass, {})], True)
 
 
-class BlueprintBinarySensor(BinarySensorDevice):
-    """blueprint binary_sensor class."""
+class OctoprintBinarySensor(BinarySensorDevice):
+    """octoprint_hass binary_sensor class."""
 
     def __init__(self, hass, config):
         self.hass = hass
@@ -61,7 +61,7 @@ class BlueprintBinarySensor(BinarySensorDevice):
         return {
             "identifiers": {(DOMAIN, self.unique_id)},
             "name": self.name,
-            "manufacturer": "Blueprint",
+            "manufacturer": "OctoPrint",
         }
 
     @property

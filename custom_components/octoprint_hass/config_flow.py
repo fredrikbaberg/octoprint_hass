@@ -2,7 +2,8 @@
 from collections import OrderedDict
 
 import voluptuous as vol
-from sampleclient.client import Client
+
+# from sampleclient.client import Client
 from homeassistant import config_entries
 
 from .const import DOMAIN
@@ -75,15 +76,15 @@ class BlueprintFlowHandler(config_entries.ConfigFlow):
     async def _test_credentials(self, username, password):
         """Return true if credentials is valid."""
         try:
-            client = Client(username, password)
-            client.get_data()
+            # client = Client(username, password)
+            # client.get_data()
             return True
         except Exception:  # pylint: disable=broad-except
             pass
         return False
 
-    async def async_step_zeroconf(self, discovery_info):
-        import logging
-
-        _LOGGER = logging.getLogger(__name__)
-        _LOGGER.info("Discovered device with info: \n%s", discovery_info)
+    # async def async_step_zeroconf(self, discovery_info):
+    #     """ Add discovery data here at some point. """
+    #     import logging
+    #     _LOGGER = logging.getLogger(__name__)
+    #     _LOGGER.info("Discovered device with info: \n%s", discovery_info)

@@ -1,4 +1,4 @@
-"""Sensor platform for blueprint."""
+"""Sensor platform for octoprint_hass."""
 from homeassistant.helpers.entity import Entity
 from .const import ATTRIBUTION, DEFAULT_NAME, DOMAIN_DATA, ICON, DOMAIN
 
@@ -7,16 +7,16 @@ async def async_setup_platform(
     hass, config, async_add_entities, discovery_info=None
 ):  # pylint: disable=unused-argument
     """Setup sensor platform."""
-    async_add_entities([BlueprintSensor(hass, discovery_info)], True)
+    async_add_entities([OctoprintSensor(hass, discovery_info)], True)
 
 
 async def async_setup_entry(hass, config_entry, async_add_devices):
     """Setup sensor platform."""
-    async_add_devices([BlueprintSensor(hass, {})], True)
+    async_add_devices([OctoprintSensor(hass, {})], True)
 
 
-class BlueprintSensor(Entity):
-    """blueprint Sensor class."""
+class OctoprintSensor(Entity):
+    """octoprint_hass Sensor class."""
 
     def __init__(self, hass, config):
         self.hass = hass
@@ -55,7 +55,7 @@ class BlueprintSensor(Entity):
         return {
             "identifiers": {(DOMAIN, self.unique_id)},
             "name": self.name,
-            "manufacturer": "Blueprint",
+            "manufacturer": "octoprint_hass",
         }
 
     @property

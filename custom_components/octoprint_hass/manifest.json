@@ -1,18 +1,19 @@
 {
-  "domain": "octoprint_hass",
-  "name": "OctoPrint-HA",
-  "documentation": "https://github.com/fredrikbaberg/octoprint_hass",
-  "dependencies": [],
-  "config_flow": true,
-  "zeroconf": [
-    "_octoprint._tcp.local."
-  ],
   "codeowners": [
     "@fredrikbaberg"
   ],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/fredrikbaberg/octoprint_hass",
+  "domain": "octoprint_hass",
+  "homeassistant": "0.96.0",
+  "name": "OctoPrint-HA",
   "requirements": [
     "sampleclient",
-    "integrationhelper"
+    "integrationhelper",
+    "requests"
   ],
-  "homeassistant": "0.96.0"
+  "zeroconf": [
+    "_octoprint._tcp.local."
+  ]
 }

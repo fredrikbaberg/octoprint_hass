@@ -1,8 +1,8 @@
 """
-Component to integrate with blueprint.
+Custom component to integrate with OctoPrint.
 
 For more details about this component, please refer to
-https://github.com/custom-components/blueprint
+https://github.com/fredrikbaberg/octoprint_hass
 """
 import os
 from datetime import timedelta
@@ -15,6 +15,7 @@ from homeassistant.util import Throttle
 
 from sampleclient.client import Client
 from integrationhelper.const import CC_STARTUP_VERSION
+from .octoprint_rest_api import OctoPrint
 
 from .const import (
     CONF_BINARY_SENSOR,
@@ -79,7 +80,7 @@ CONFIG_SCHEMA = vol.Schema(
 async def async_setup(hass, config):
     """Set up this component using YAML."""
     if config.get(DOMAIN) is None:
-        # We get her if the integration is set up using config flow
+        # We get here if the integration is set up using config flow
         return True
 
     # Print startup message
@@ -100,8 +101,9 @@ async def async_setup(hass, config):
     password = config[DOMAIN].get(CONF_PASSWORD)
 
     # Configure the client.
+    # OP = OctoPrint(host, port)
     client = Client(username, password)
-    hass.data[DOMAIN_DATA]["client"] = BlueprintData(hass, client)
+    hass.data[DOMAIN_DATA]["client"] = OctoprintData(hass, client)
 
     # Load platforms
     for platform in PLATFORMS:
@@ -134,6 +136,7 @@ async def async_setup(hass, config):
 
 async def async_setup_entry(hass, config_entry):
     """Set up this integration using UI."""
+    _LOGGER.info("TEST: async_setup_entry\n%s", config_entry.data)
     conf = hass.data.get(DOMAIN_DATA)
     if config_entry.source == config_entries.SOURCE_IMPORT:
         if conf is None:
@@ -160,8 +163,9 @@ async def async_setup_entry(hass, config_entry):
     password = config_entry.data.get(CONF_PASSWORD)
 
     # Configure the client.
+    # OP = OctoPrint(host, port)
     client = Client(username, password)
-    hass.data[DOMAIN_DATA]["client"] = BlueprintData(hass, client)
+    hass.data[DOMAIN_DATA]["client"] = OctoprintData(hass, client)
 
     # Add binary_sensor
     hass.async_add_job(
@@ -181,7 +185,7 @@ async def async_setup_entry(hass, config_entry):
     return True
 
 
-class BlueprintData:
+class OctoprintData:
     """This class handle communication and stores the data."""
 
     def __init__(self, hass, client):
@@ -226,19 +230,19 @@ async def async_remove_entry(hass, config_entry):
             config_entry, "binary_sensor"
         )
         _LOGGER.info(
-            "Successfully removed binary_sensor from the blueprint integration"
+            "Successfully removed binary_sensor from the Octoprint integration"
         )
     except ValueError:
         pass
 
     try:
         await hass.config_entries.async_forward_entry_unload(config_entry, "sensor")
-        _LOGGER.info("Successfully removed sensor from the blueprint integration")
+        _LOGGER.info("Successfully removed sensor from the Octoprint integration")
     except ValueError:
         pass
 
     try:
         await hass.config_entries.async_forward_entry_unload(config_entry, "switch")
-        _LOGGER.info("Successfully removed switch from the blueprint integration")
+        _LOGGER.info("Successfully removed switch from the Octoprint integration")
     except ValueError:
         pass

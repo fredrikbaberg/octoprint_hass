@@ -1,4 +1,4 @@
-"""Constants for blueprint."""
+"""Constants for OctoprintHass."""
 # Base component constants
 DOMAIN = "octoprint_hass"
 DOMAIN_DATA = f"{DOMAIN}_data"
@@ -13,8 +13,8 @@ REQUIRED_FILES = [
     "sensor.py",
     "switch.py",
 ]
-ISSUE_URL = "https://github.com/custom-components/blueprint/issues"
-ATTRIBUTION = "Data from this is provided by blueprint."
+ISSUE_URL = "https://github.com/fredrikbaberg/octoprint_hass/issues"
+ATTRIBUTION = "Data from this is provided by OctoprintHass."
 
 # Icons
 ICON = "mdi:format-quote-close"
