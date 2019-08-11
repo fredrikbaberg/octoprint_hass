@@ -83,5 +83,7 @@ class BlueprintFlowHandler(config_entries.ConfigFlow):
         return False
 
     async def async_step_zeroconf(self, discovery_info):
+        import logging
+
         _LOGGER = logging.getLogger(__name__)
         _LOGGER.info("Discovered device with info: \n%s", discovery_info)
