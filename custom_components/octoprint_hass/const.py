@@ -1,6 +1,6 @@
 """Constants for blueprint."""
 # Base component constants
-DOMAIN = "blueprint"
+DOMAIN = "octoprint_hass"
 DOMAIN_DATA = f"{DOMAIN}_data"
 VERSION = "0.0.1"
 PLATFORMS = ["binary_sensor", "sensor", "switch"]
