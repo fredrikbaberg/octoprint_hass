@@ -1,4 +1,4 @@
-"""Adds config flow for Blueprint."""
+"""Adds config flow for Octoprint."""
 from collections import OrderedDict
 
 import voluptuous as vol
@@ -10,8 +10,8 @@ from .const import DOMAIN
 
 
 @config_entries.HANDLERS.register(DOMAIN)
-class BlueprintFlowHandler(config_entries.ConfigFlow):
-    """Config flow for Blueprint."""
+class OctoprintFlowHandler(config_entries.ConfigFlow):
+    """Config flow for Octoprint."""
 
     VERSION = 1
     CONNECTION_CLASS = config_entries.CONN_CLASS_CLOUD_POLL
@@ -32,7 +32,7 @@ class BlueprintFlowHandler(config_entries.ConfigFlow):
 
         if user_input is not None:
             valid = await self._test_credentials(
-                user_input["username"], user_input["password"]
+                user_input["host"], user_input["port"], user_input["api_key"]
             )
             if valid:
                 return self.async_create_entry(title="", data=user_input)
@@ -47,18 +47,21 @@ class BlueprintFlowHandler(config_entries.ConfigFlow):
         """Show the configuration form to edit location data."""
 
         # Defaults
-        username = ""
-        password = ""
+        host = ""
+        port = ""
+        api_key = ""
 
         if user_input is not None:
-            if "username" in user_input:
-                username = user_input["username"]
-            if "password" in user_input:
-                password = user_input["password"]
+            if "host" in user_input:
+                host = user_input["host"]
+            if "port" in user_input:
+                port = user_input["port"]
+            if "api_key" in user_input:
+                api_key = user_input["api_key"]
 
         data_schema = OrderedDict()
-        data_schema[vol.Required("username", default=username)] = str
-        data_schema[vol.Required("password", default=password)] = str
+        data_schema[vol.Required("host", default=host)] = str
+        data_schema[vol.Required("port", default=port)] = str
         return self.async_show_form(
             step_id="user", data_schema=vol.Schema(data_schema), errors=self._errors
         )

@@ -139,6 +139,7 @@ async def async_setup_entry(hass, config_entry):
     _LOGGER.info("TEST: async_setup_entry\n%s", config_entry.data)
     conf = hass.data.get(DOMAIN_DATA)
     if config_entry.source == config_entries.SOURCE_IMPORT:
+        _LOGGER.info("TEST: Import")
         if conf is None:
             hass.async_create_task(
                 hass.config_entries.async_remove(config_entry.entry_id)
@@ -159,12 +160,14 @@ async def async_setup_entry(hass, config_entry):
     hass.data[DOMAIN_DATA] = {}
 
     # Get "global" configuration.
-    username = config_entry.data.get(CONF_USERNAME)
-    password = config_entry.data.get(CONF_PASSWORD)
+    # username = config_entry.data.get(CONF_USERNAME)
+    # password = config_entry.data.get(CONF_PASSWORD)
+    host = '127.0.0.1'
+    port = 5000
 
     # Configure the client.
-    # OP = OctoPrint(host, port)
-    client = Client(username, password)
+    # client = Client(username, password)
+    client = OctoPrint(host, port)
     hass.data[DOMAIN_DATA]["client"] = OctoprintData(hass, client)
 
     # Add binary_sensor
